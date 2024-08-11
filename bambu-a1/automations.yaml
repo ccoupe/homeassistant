@@ -1,0 +1,54 @@
+
+config # cat automations.yaml 
+- id: '1723137363351'
+  alias: Bambu A1 Progress
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.a1_03919c440801625_print_progress
+  condition: []
+  action:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: '1'
+      retain: false
+      topic: A1/Progress
+      payload: '{{ trigger.to_state.state }}
+
+        '
+  mode: single
+- id: '1723141032562'
+  alias: Test publish
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: '1'
+      retain: false
+      topic: homie/bronco_notify/display/text/set
+      payload: Progress 8%
+  mode: single
+- id: '1723153046232'
+  alias: Bambu A1 Status
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.a1_03919c440801625_print_status
+  condition: []
+  action:
+  - action: mqtt.publish
+    metadata: {}
+    data:
+      qos: 0
+      retain: false
+      topic: A1/Status
+      payload: '{{ trigger.to_state.state }}'
+  mode: single
+config # 
+
